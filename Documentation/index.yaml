@@ -1,0 +1,607 @@
+openapi: "3.0.0"
+info:
+    version: "1.0.0"
+    title: "Express API"
+    description: Users and Messages API
+    contact:
+        email: deysoumavo65@gmail.com
+        name: Soumavo Dey
+
+servers:
+    - url: http://localhost:5000
+      description: Internal server for testing
+
+paths:
+    /users:
+        get:
+            security:
+                - bearerAuth: []
+            summary: Read all users in the database sorted in latest created
+            parameters:
+                - in: header
+                  name: x-correlation-id
+                  schema:
+                      type: string
+                      format: uuid
+                  description: A unique Id to trace request details in production logs
+                  required: false
+                - in: query
+                  name: offset
+                  schema:
+                    type: integer
+                  description: The number of users to skip before starting to collect the result set
+                  required: false
+                - in: query
+                  name: limit
+                  schema:
+                    type: integer
+                  description: The numbers of users to return
+                  required: false
+            responses:
+                200:
+                    description: All the users present in the databse
+                    headers:
+                        x-correlation-id:
+                            schema:
+                              type: string
+                              format: uuid
+                            description: A unique Id to trace request details in production logs
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/User"
+                400:
+                    description: Bad request (Client Error)
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                500:
+                    description: Unexpected error (Server Error)
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+        put:
+            security:
+                - bearerAuth: []
+            summary: Update a Single User Details
+            parameters:
+                - in: header
+                  name: x-correlation-id
+                  schema:
+                      type: string
+                      format: uuid
+                  description: A unique Id to trace request details in production logs
+                  required: false
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                firstName:
+                                    type: string
+                                lastName:
+                                    type: string
+                                profilePhoto:
+                                    type: string
+            responses:
+                200:
+                    description: The category corresponding to the provided `categoryId`
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Category"
+                400:
+                    description: Bad request (Client Error)
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                500:
+                    description: Unexpected Error (Server Error)
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+    /users/register:
+        post:
+            summary: Create new user
+            parameters:
+                - in: header
+                  name: Content-Type
+                  schema:
+                        type: string
+                        description: Request body type
+                  required: false
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                firstName:
+                                    type: string
+                                lastName:
+                                    type: string
+                                email:
+                                    type: string
+                                password:
+                                    type: string
+            responses:
+                201:
+                    description: Created user in the database
+                    headers:
+                        x-correlation-id:
+                            schema:
+                              type: string
+                              format: uuid
+                            description: A unique Id to trace request details in production logs
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    token:
+                                        type: string
+                                        description: Generated JWT token
+                                    user:
+                                        type: object
+                                        properties:
+                                            _id:
+                                                type: string
+                                                description: Unique identifier for each user
+                                            firstName:
+                                                type: string
+                                            lastName:
+                                                type: string
+                                            email:
+                                                type: string
+                                            profilePhoto:
+                                                type: string
+                                            createdAt:
+                                                type: string
+                                            updatedAt:
+                                                type: string
+                400:
+                    description: Bad request (Client Error)
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                500:
+                    description: Unexpected Error (Server Error)
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+    /users/login:
+        post:
+            summary: Log in user
+            parameters:
+                - in: header
+                  name: Content-Type
+                  schema:
+                        type: string
+                        description: Request body type
+                  required: false
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                firstName:
+                                    type: string
+                                lastName:
+                                    type: string
+                                email:
+                                    type: string
+                                password:
+                                    type: string
+            responses:
+                200:
+                    description: User successfully logged in
+                    headers:
+                        x-correlation-id:
+                            schema:
+                              type: string
+                              format: uuid
+                            description: A unique Id to trace request details in production logs
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    token:
+                                        type: string
+                                        description: Generated JWT token
+                                    user:
+                                        $ref: "#/components/schemas/User"
+                400:
+                    description: Bad request (Client Error)
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                500:
+                    description: Unexpected Error (Server Error)
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+    /users/{userId}:
+        parameters:
+            - name: userId
+              description: The unique identifier of the user
+              in: path
+              required: true
+              schema:
+                  type: string
+        get:
+            security:
+                - bearerAuth: []
+            summary: Get Details of Single User
+            parameters:
+                - in: header
+                  name: x-correlation-id
+                  schema:
+                      type: string
+                      format: uuid
+                  description: A unique Id to trace request details in production logs
+                  required: false
+            responses:
+                200:
+                    description: The user corresponding to the provided `userId`
+                    headers:
+                        x-correlation-id:
+                            schema:
+                              type: string
+                              format: uuid
+                            description: A unique Id to trace request details in production logs
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/User"
+                400:
+                    description: Bad request (Client Error)
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                500:
+                    description: Unexpected Error (Server Error)
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+    /rooms:
+        get:
+            security:
+                - bearerAuth: []
+            summary: Gets all the rooms in the database
+            parameters:
+                - in: header
+                  name: x-correlation-id
+                  schema:
+                      type: string
+                      format: uuid
+                  description: A unique Id to trace request details in production logs
+                  required: false
+                - in: query
+                  name: offset
+                  schema:
+                    type: integer
+                  description: The number of users to skip before starting to collect the result set
+                  required: false
+                - in: query
+                  name: limit
+                  schema:
+                    type: integer
+                  description: The numbers of users to return
+                  required: false
+            responses:
+                200:
+                    description: All the rooms present in the databse
+                    headers:
+                        x-correlation-id:
+                            schema:
+                              type: string
+                              format: uuid
+                            description: A unique Id to trace request details in production logs
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/Room"
+                400:
+                    description: Bad request (Client Error)
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                500:
+                    description: Unexpected error (Server Error)
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+    /rooms/new:
+        post:
+            security:
+                - bearerAuth: []
+            summary: Create new chat room
+            parameters:
+                - in: header
+                  name: x-correlation-id
+                  schema:
+                      type: string
+                      format: uuid
+                  description: A unique Id to trace request details in production logs
+                  required: false
+                - in: header
+                  name: Content-Type
+                  schema:
+                        type: string
+                        description: Request body type
+                  required: false
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                name:
+                                    type: string
+            responses:
+                201:
+                    description: Created new room in the database
+                    headers:
+                        x-correlation-id:
+                            schema:
+                              type: string
+                              format: uuid
+                            description: A unique Id to trace request details in production logs
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Room"
+                400:
+                    description: Bad request (Client Error)
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                500:
+                    description: Unexpected Error (Server Error)
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+    /rooms/{roomId}:
+        get:
+            security:
+                - bearerAuth: []
+            summary: Get details of single chat room
+            parameters:
+                - name: roomId
+                  description: The unique identifier of the room
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+                - in: header
+                  name: x-correlation-id
+                  schema:
+                      type: string
+                      format: uuid
+                  description: A unique Id to trace request details in production logs
+                  required: false
+            responses:
+                200:
+                    description: The room corresponding to the provided `roomId`
+                    headers:
+                        x-correlation-id:
+                            schema:
+                              type: string
+                              format: uuid
+                            description: A unique Id to trace request details in production logs
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Room"
+                400:
+                    description: Bad request (Client Error)
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                500:
+                    description: Unexpected Error (Server Error)
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+    /messages/private:
+        get:
+            security:
+                - bearerAuth: []
+            summary: Get all messages either sent or received by the user
+            parameters:
+                - in: header
+                  name: x-correlation-id
+                  schema:
+                      type: string
+                      format: uuid
+                  description: A unique Id to trace request details in production logs
+                  required: false
+                - in: query
+                  name: offset
+                  schema:
+                    type: integer
+                  description: The number of users to skip before starting to collect the result set
+                  required: false
+                - in: query
+                  name: limit
+                  schema:
+                    type: integer
+                  description: The numbers of users to return
+                  required: false
+            responses:
+                200:
+                    description: All the messages either sent or received by the user
+                    headers:
+                        x-correlation-id:
+                            schema:
+                              type: string
+                              format: uuid
+                            description: A unique Id to trace request details in production logs
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/PrivateMessage"
+                400:
+                    description: Bad request (Client Error)
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                500:
+                    description: Unexpected error (Server Error)
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+    /messages/room/{roomId}:
+        get:
+            security:
+                - bearerAuth: []
+            summary: Get all messages either sent or received by the user in the corresponding room
+            parameters:
+                - in: header
+                  name: x-correlation-id
+                  schema:
+                      type: string
+                      format: uuid
+                  description: A unique Id to trace request details in production logs
+                  required: false
+                - name: roomId
+                  description: The unique identifier of the room
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: offset
+                  schema:
+                    type: integer
+                  description: The number of users to skip before starting to collect the result set
+                  required: false
+                - in: query
+                  name: limit
+                  schema:
+                    type: integer
+                  description: The numbers of users to return
+                  required: false
+            responses:
+                200:
+                    description: All the messages either sent or received by the user in the corresponding room
+                    headers:
+                        x-correlation-id:
+                            schema:
+                              type: string
+                              format: uuid
+                            description: A unique Id to trace request details in production logs
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/PrivateMessage"
+                400:
+                    description: Bad request (Client Error)
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                500:
+                    description: Unexpected error (Server Error)
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+components:
+    schemas:
+        User:
+            type: object
+            properties:
+                _id:
+                    $ref: "#/components/schemas/userId"
+                firstName:
+                    type: string
+                lastName:
+                    type: string
+                email:
+                    type: string
+                profilePhoto:
+                    type: string
+        Room:
+            type: object
+            properties:
+                _id:
+                    type: string
+                name:
+                    type: string
+                users:
+                    type: array
+                    description: id of users
+                    items:
+                        type: string
+                createdAt:
+                    type: string
+        PrivateMessage:
+            type: object
+            properties:
+                _id:
+                    type: string
+                content:
+                    type: string
+                sender:
+                    type: string
+                receiver:
+                    type: string
+                createdAt:
+                    type: string
+                updatedAt:
+                    type: string
+        Error:
+            type: object
+            required:
+                - correlationId
+                - message
+                - stack
+            properties:
+                correlationId:
+                    description: A unique Id to trace error in production logs
+                    type: string
+                message:
+                    description: A human readable error message
+                    type: string
+                stack:
+                    description: Complete path to the error stack
+                    type: string
+    securitySchemes:
+        bearerAuth:
+            type: http
+            scheme: bearer
+            bearerFormat: JWT

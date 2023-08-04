@@ -1,0 +1,130 @@
+{
+	"info": {
+		"_postman_id": "9399cdf4-219c-470c-a34e-e0ac1cd614c9",
+		"name": "Users",
+		"description": "Create, Read, Update, Delete users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23890998"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"Soumavo\",\n    \"lastName\": \"Dey\",\n    \"email\": \"deydebangshu65@gmail.com\",\n    \"password\": \"$OUM@vo65\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/users/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Users",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YzkxMDk2NGZjN2Y0NTg4MGU2MWZhMyIsImlhdCI6MTY5MDg5ODU4Mn0.dMHYR5gqc0BdQ8o6H5sYTE3brI9IeHamRoemIlmXVCQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/users?offset=2&limit=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "offset",
+							"value": "2"
+						},
+						{
+							"key": "limit",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"deydebangshu65@gmail.com\",\n    \"password\": \"$OUM@vo65\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/users/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Single User",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YzkxMDk2NGZjN2Y0NTg4MGU2MWZhMyIsImlhdCI6MTY5MDkxMDQxMH0.jnuc1vJONwR5iPXmKWiJZQuQ2wY3Urx6t56lCnax8D8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/users/64c8fa06b56b9369901307d3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"users",
+						"64c8fa06b56b9369901307d3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

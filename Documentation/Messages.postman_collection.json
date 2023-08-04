@@ -1,0 +1,83 @@
+{
+	"info": {
+		"_postman_id": "dfead0eb-b7cd-47b5-8ecf-6ae6b74c7db3",
+		"name": "Messages",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23890998"
+	},
+	"item": [
+		{
+			"name": "Get Private Messages",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YzkxMDk2NGZjN2Y0NTg4MGU2MWZhMyIsImlhdCI6MTY5MTE1MDE2OX0.5F_q6gecsH2aCbTKab7PXbkAKFpLpxXHTHE1_4zGiVo",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/messages/private?offset=3&limit=5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"messages",
+						"private"
+					],
+					"query": [
+						{
+							"key": "offset",
+							"value": "3"
+						},
+						{
+							"key": "limit",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Room Messages",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YzkxMDBkNGZjN2Y0NTg4MGU2MWY5ZiIsImlhdCI6MTY5MTE1MDI4N30.fhthGUDOyHVpegI7I78Ry-5yoJYDr5oPkpkWpyYP__0",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/messages/room/64c986659bd4a74b0f47bb10?offset=2&limit=5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"messages",
+						"room",
+						"64c986659bd4a74b0f47bb10"
+					],
+					"query": [
+						{
+							"key": "offset",
+							"value": "2"
+						},
+						{
+							"key": "limit",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

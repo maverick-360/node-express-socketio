@@ -1,0 +1,32 @@
+{
+  "name": "raftlabs-assignment",
+  "version": "4.0.0",
+  "description": "Official server for https://trythemenu.com",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest --watchAll",
+    "start": "NODE_ENV=production node index.js",
+    "dev": "NODE_ENV=dev nodemon index.js"
+  },
+  "author": "Soumavo Dey",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "joi": "^17.9.2",
+    "jsonwebtoken": "^9.0.1",
+    "mongoose": "^7.4.1",
+    "redis": "^4.6.7",
+    "socket.io": "^4.7.1",
+    "uuid": "^9.0.0",
+    "winston": "^3.9.0",
+    "winston-mongodb": "^5.1.1"
+  },
+  "devDependencies": {
+    "jest": "^29.6.1",
+    "nodemon": "^3.0.1",
+    "supertest": "^6.3.3"
+  }
+}

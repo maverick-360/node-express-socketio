@@ -1,0 +1,96 @@
+{
+	"info": {
+		"_postman_id": "8e5fe658-008f-4853-ad8d-2c7f2745eb2f",
+		"name": "Rooms",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23890998"
+	},
+	"item": [
+		{
+			"name": "Create Room",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YzkxMDk2NGZjN2Y0NTg4MGU2MWZhMyIsImlhdCI6MTY5MDkyMDg3M30.7td7K6S_SNdOZDyFmt1rLsD1GICUpjk5DWKpyX_EvYE",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Apna Room\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/rooms/new",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"rooms",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Rooms",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YzkxMDk2NGZjN2Y0NTg4MGU2MWZhMyIsImlhdCI6MTY5MDkyMDg3M30.7td7K6S_SNdOZDyFmt1rLsD1GICUpjk5DWKpyX_EvYE",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/rooms",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"rooms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Single Room",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YzkxMDk2NGZjN2Y0NTg4MGU2MWZhMyIsImlhdCI6MTY5MDkyMDg3M30.7td7K6S_SNdOZDyFmt1rLsD1GICUpjk5DWKpyX_EvYE",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/rooms/64c986659bd4a74b0f47bb10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"rooms",
+						"64c986659bd4a74b0f47bb10"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

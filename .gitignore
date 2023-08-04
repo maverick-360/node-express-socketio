@@ -1,0 +1,4 @@
+node_modules
+errors.log
+requests.log
+monitors.log
